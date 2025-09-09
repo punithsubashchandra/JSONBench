@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load shared environment
+source "$(dirname "$0")/env.sh"
+
 # Check if the required arguments are provided
 if [[ $# -lt 6 ]]; then
     echo "Usage: $0 <DATA_DIRECTORY> <DB_NAME> <TABLE_NAME> <MAX_FILES> <SUCCESS_LOG> <ERROR_LOG>"
@@ -36,14 +39,25 @@ for file in $(ls "$DATA_DIRECTORY"/*.json.gz | head -n "$MAX_FILES"); do
         echo "Error: Failed to uncompress $file" >> "$ERROR_LOG"
         continue
     fi
-    MAX_ATTEMPT=10
+
+    MAX_ATTEMPT=1
     attempt=0
     while [ $attempt -lt $MAX_ATTEMPT ]
     do
-        # Attempt the import
-        http_code=$(curl -s -w "%{http_code}" -o >(cat >/tmp/curl_body) --location-trusted -u root: -H "strict_mode: true" -H "Expect:100-continue" -H "columns: data" -T "$uncompressed_file" -XPUT http://127.0.0.1:8030/api/"$DB_NAME"/"$TABLE_NAME"/_stream_load)
-        response_body="$(cat /tmp/curl_body)"
-        response_status="$(cat /tmp/curl_body | jq -r '.Status')"
+        http_code=$(curl -s -w "%{http_code}" -o >(cat >/tmp/curl_body_$$) \
+            --location-trusted -u root: \
+            -H "max_filter_ratio: 0.00001" \
+            -H "strict_mode: true" \
+            -H "Expect:100-continue" \
+            -T "$uncompressed_file" \
+            -XPUT http://${DB_HOST}:${DB_HTTP_PORT}/api/"$DB_NAME"/"$TABLE_NAME"/_stream_load)
+        response_body="$(cat /tmp/curl_body_$$)"
+        if jq -e . >/dev/null 2>&1 < /tmp/curl_body_$$; then
+            response_status="$(jq -r '.Status' < /tmp/curl_body_$$)"
+        else
+            response_status=""
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Invalid JSON response for $file: $(cat /tmp/curl_body_$$)" >> "$ERROR_LOG"
+        fi
         echo $response_status
         if [[ "$http_code" -ge 200 && "$http_code" -lt 300 ]]; then
             if [ "$response_status" = "Success" ]
