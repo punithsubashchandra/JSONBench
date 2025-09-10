@@ -18,6 +18,11 @@ ERROR_LOG="${4:-error.log}"
 # Define prefix for output files
 OUTPUT_PREFIX="${5:-_m6i.8xlarge}"
 
+export DB_HOST="127.0.0.1"
+export DB_USER="root"
+export DB_MYSQL_PORT="9030"
+export DB_HTTP_PORT="8030" # HTTP endpoint for stream load
+
 # Check if the directory exists
 if [[ ! -d "$DATA_DIRECTORY" ]]; then
     echo "Error: Data directory '$DATA_DIRECTORY' does not exist."
@@ -34,7 +39,6 @@ if [ "$CHOICE" = "ask" ]; then
     read -p "Enter the number corresponding to your choice: " CHOICE
 fi;
 
-./env.sh
 ./install.sh
 
 benchmark() {
