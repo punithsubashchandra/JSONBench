@@ -9,9 +9,6 @@ fi
 # Arguments
 DB_NAME="$1"
 
-# Load shared environment
-source "$(dirname "$0")/env.sh"
-
 QUERY_NUM=1
 
 cat queries.sql | while read -r query; do

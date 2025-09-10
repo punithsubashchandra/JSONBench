@@ -34,6 +34,7 @@ if [ "$CHOICE" = "ask" ]; then
     read -p "Enter the number corresponding to your choice: " CHOICE
 fi;
 
+./env.sh
 ./install.sh
 
 benchmark() {

@@ -2,9 +2,6 @@
 
 # If you change something in this file, please change also in doris/run_queries.sh.
 
-# Load shared environment
-source "$(dirname "$0")/env.sh"
-
 # Check if the required arguments are provided
 if [[ $# -lt 1 ]]; then
     echo "Usage: $0 <DB_NAME>"

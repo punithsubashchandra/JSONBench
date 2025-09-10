@@ -12,7 +12,4 @@ fi
 DB_NAME="$1"
 TABLE_NAME="$2"
 
-# Load shared environment
-source "$(dirname "$0")/env.sh"
-
 mysql -P "$DB_MYSQL_PORT" -h "$DB_HOST" -u "$DB_USER" "$DB_NAME" -e "SELECT count() FROM $TABLE_NAME;"

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Load shared environment
-source "$(dirname "$0")/env.sh"
-
 # Check if the required arguments are provided
 if [[ $# -lt 6 ]]; then
     echo "Usage: $0 <DATA_DIRECTORY> <DB_NAME> <TABLE_NAME> <MAX_FILES> <SUCCESS_LOG> <ERROR_LOG>"
