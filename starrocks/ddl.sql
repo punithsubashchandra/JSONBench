@@ -8,6 +8,5 @@ CREATE TABLE bluesky (
         get_json_string(data, 'commit.collection'),
         get_json_string(data, 'did')
     )
-) 
-DISTRIBUTED BY HASH(sort_key) BUCKETS 128
+)
 ORDER BY (sort_key);
