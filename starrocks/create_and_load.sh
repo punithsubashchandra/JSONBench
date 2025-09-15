@@ -15,6 +15,7 @@ DATA_DIRECTORY="$3"
 NUM_FILES="$4"
 SUCCESS_LOG="$5"
 ERROR_LOG="$6"
+DDL_FILE="ddl.sql"
 
 # Validate arguments
 [[ ! -d "$DATA_DIRECTORY" ]] && { echo "Error: Data directory '$DATA_DIRECTORY' does not exist."; exit 1; }
@@ -22,10 +23,10 @@ ERROR_LOG="$6"
 
 
 echo "Create database"
-mysql -P 9030 -h 127.0.0.1 -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
+mysql -P "$DB_MYSQL_PORT" -h "$DB_HOST" -u "$DB_USER" -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
 
 echo "Execute DDL"
-mysql -P 9030 -h 127.0.0.1 -u root $DB_NAME < "ddl.sql"
+mysql -P "$DB_MYSQL_PORT" -h "$DB_HOST" -u "$DB_USER" "$DB_NAME" < "$DDL_FILE"
 
 echo "Load data"
 ./load_data.sh "$DATA_DIRECTORY" "$DB_NAME" "$TABLE_NAME" "$NUM_FILES" "$SUCCESS_LOG" "$ERROR_LOG"

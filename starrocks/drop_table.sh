@@ -12,4 +12,4 @@ DB_NAME="$1"
 TABLE_NAME="$2"
 
 echo "Dropping table: $DB_NAME.$TABLE_NAME"
-mysql -P 9030 -h 127.0.0.1 -u root $DB_NAME -e "DROP TABLE IF EXISTS $TABLE_NAME"
+mysql -P "$DB_MYSQL_PORT" -h "$DB_HOST" -u "$DB_USER" "$DB_NAME" -e "DROP TABLE IF EXISTS $TABLE_NAME"

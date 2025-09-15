@@ -12,4 +12,4 @@ fi
 DB_NAME="$1"
 TABLE_NAME="$2"
 
-mysql -P 9030 -h 127.0.0.1 -u root $DB_NAME -e "SHOW DATA FROM $TABLE_NAME"
+mysql -P "$DB_MYSQL_PORT" -h "$DB_HOST" -u "$DB_USER" "$DB_NAME" -e "SHOW DATA FROM $TABLE_NAME"
