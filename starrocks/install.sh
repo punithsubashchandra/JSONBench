@@ -4,11 +4,9 @@ sudo snap install docker
 sudo apt-get update
 sudo apt-get install -y mysql-client
 
-# Start the Docker container
-echo "Starting StarRocks container..."
 docker run -p 9030:9030 -p 8030:8030 -p 8040:8040 -itd --name starrocks starrocks/allin1-ubuntu:4.0.0-rc01
 
-# Wait for container to start
+echo "Starting StarRocks container..."
 sleep 5
 
 # Monitor logs until "Enjoy" appears
