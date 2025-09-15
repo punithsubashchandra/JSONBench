@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the required arguments are provided
-if [[ $# -lt 3 ]]; then
+if [[ $# -lt 2 ]]; then
     echo "Usage: $0 <DB_NAME> <RESULT_FILE_RUNTIMES>"
     exit 1
 fi
