@@ -10,8 +10,9 @@ Expression (Project names)
           Indexes:
             PrimaryKey
               Condition: true
-              Parts: 99/99
-              Granules: 356251/356251
+              Parts: 104/104
+              Granules: 352642/352642
+              Ranges: 104
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q2:
 
@@ -20,16 +21,18 @@ Expression (Project names)
     Expression ((Before ORDER BY + Projection))
       Aggregating
         Expression (Before GROUP BY)
-          Filter ((WHERE + Change column names to column identifiers))
+          Expression ((WHERE + Change column names to column identifiers))
             ReadFromMergeTree (bluesky_1000m_zstd.bluesky)
             Indexes:
               PrimaryKey
-                Keys: 
+                Keys:
                   data.kind
                   data.commit.operation
                 Condition: and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\']))
-                Parts: 99/99
-                Granules: 338299/356251
+                Parts: 104/104
+                Granules: 334850/352642
+                Search Algorithm: binary search
+                Ranges: 104
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q3:
 
@@ -38,17 +41,19 @@ Expression (Project names)
     Expression ((Before ORDER BY + Projection))
       Aggregating
         Expression (Before GROUP BY)
-          Filter ((WHERE + Change column names to column identifiers))
+          Expression ((WHERE + Change column names to column identifiers))
             ReadFromMergeTree (bluesky_1000m_zstd.bluesky)
             Indexes:
               PrimaryKey
-                Keys: 
+                Keys:
                   data.kind
                   data.commit.operation
                   data.commit.collection
                 Condition: and((data.commit.collection in 3-element set), and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\'])))
-                Parts: 99/99
-                Granules: 223569/356251
+                Parts: 104/104
+                Granules: 221204/352642
+                Search Algorithm: generic exclusion search
+                Ranges: 115
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q4:
 
@@ -58,17 +63,19 @@ Expression (Project names)
       Expression ((Before ORDER BY + Projection))
         Aggregating
           Expression (Before GROUP BY)
-            Filter ((WHERE + Change column names to column identifiers))
+            Expression ((WHERE + Change column names to column identifiers))
               ReadFromMergeTree (bluesky_1000m_zstd.bluesky)
               Indexes:
                 PrimaryKey
-                  Keys: 
+                  Keys:
                     data.kind
                     data.commit.operation
                     data.commit.collection
                   Condition: and((data.commit.collection in [\'app.bsky.feed.post\', \'app.bsky.feed.post\']), and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\'])))
-                  Parts: 99/99
-                  Granules: 35131/356251
+                  Parts: 104/104
+                  Granules: 34759/352642
+                  Search Algorithm: binary search
+                  Ranges: 104
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q5:
 
@@ -78,14 +85,16 @@ Expression (Project names)
       Expression ((Before ORDER BY + Projection))
         Aggregating
           Expression (Before GROUP BY)
-            Filter ((WHERE + Change column names to column identifiers))
+            Expression ((WHERE + Change column names to column identifiers))
               ReadFromMergeTree (bluesky_1000m_zstd.bluesky)
               Indexes:
                 PrimaryKey
-                  Keys: 
+                  Keys:
                     data.kind
                     data.commit.operation
                     data.commit.collection
                   Condition: and((data.commit.collection in [\'app.bsky.feed.post\', \'app.bsky.feed.post\']), and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\'])))
-                  Parts: 99/99
-                  Granules: 35131/356251
+                  Parts: 104/104
+                  Granules: 34759/352642
+                  Search Algorithm: binary search
+                  Ranges: 104
