@@ -34,8 +34,8 @@ ExpressionTransform
               AggregatingTransform × 21
                 (Expression)
                 ExpressionTransform × 21
-                  (Filter)
-                  FilterTransform × 42
+                  (Expression)
+                  ExpressionTransform × 21
                     (ReadFromMergeTree)
                     MergeTreeSelect(pool: ReadPool, algorithm: Thread) × 21 0 → 1
 ------------------------------------------------------------------------------------------------------------------------
@@ -55,8 +55,8 @@ ExpressionTransform
               AggregatingTransform × 12
                 (Expression)
                 ExpressionTransform × 12
-                  (Filter)
-                  FilterTransform × 36
+                  (Expression)
+                  ExpressionTransform × 12
                     (ReadFromMergeTree)
                     MergeTreeSelect(pool: ReadPool, algorithm: Thread) × 12 0 → 1
 ------------------------------------------------------------------------------------------------------------------------
@@ -78,8 +78,8 @@ ExpressionTransform
                 AggregatingTransform
                   (Expression)
                   ExpressionTransform
-                    (Filter)
-                    FilterTransform × 3
+                    (Expression)
+                    ExpressionTransform
                       (ReadFromMergeTree)
                       MergeTreeSelect(pool: ReadPoolInOrder, algorithm: InOrder) 0 → 1
 ------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ ExpressionTransform
                 AggregatingTransform
                   (Expression)
                   ExpressionTransform
-                    (Filter)
-                    FilterTransform × 3
+                    (Expression)
+                    ExpressionTransform
                       (ReadFromMergeTree)
                       MergeTreeSelect(pool: ReadPoolInOrder, algorithm: InOrder) 0 → 1
