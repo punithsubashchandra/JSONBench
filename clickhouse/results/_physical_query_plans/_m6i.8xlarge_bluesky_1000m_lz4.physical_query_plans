@@ -34,8 +34,8 @@ ExpressionTransform
               AggregatingTransform × 32
                 (Expression)
                 ExpressionTransform × 32
-                  (Filter)
-                  FilterTransform × 64
+                  (Expression)
+                  ExpressionTransform × 32
                     (ReadFromMergeTree)
                     MergeTreeSelect(pool: ReadPool, algorithm: Thread) × 32 0 → 1
 ------------------------------------------------------------------------------------------------------------------------
@@ -55,8 +55,8 @@ ExpressionTransform
               AggregatingTransform × 32
                 (Expression)
                 ExpressionTransform × 32
-                  (Filter)
-                  FilterTransform × 96
+                  (Expression)
+                  ExpressionTransform × 32
                     (ReadFromMergeTree)
                     MergeTreeSelect(pool: ReadPool, algorithm: Thread) × 32 0 → 1
 ------------------------------------------------------------------------------------------------------------------------
@@ -78,8 +78,8 @@ ExpressionTransform
                 AggregatingTransform × 32
                   (Expression)
                   ExpressionTransform × 32
-                    (Filter)
-                    FilterTransform × 96
+                    (Expression)
+                    ExpressionTransform × 32
                       (ReadFromMergeTree)
                       MergeTreeSelect(pool: ReadPool, algorithm: Thread) × 32 0 → 1
 ------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ ExpressionTransform
                 AggregatingTransform × 32
                   (Expression)
                   ExpressionTransform × 32
-                    (Filter)
-                    FilterTransform × 96
+                    (Expression)
+                    ExpressionTransform × 32
                       (ReadFromMergeTree)
                       MergeTreeSelect(pool: ReadPool, algorithm: Thread) × 32 0 → 1

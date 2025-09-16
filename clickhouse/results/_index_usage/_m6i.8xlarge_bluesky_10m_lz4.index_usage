@@ -11,7 +11,8 @@ Expression (Project names)
             PrimaryKey
               Condition: true
               Parts: 10/10
-              Granules: 1494/1494
+              Granules: 1487/1487
+              Ranges: 10
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q2:
 
@@ -20,16 +21,18 @@ Expression (Project names)
     Expression ((Before ORDER BY + Projection))
       Aggregating
         Expression (Before GROUP BY)
-          Filter ((WHERE + Change column names to column identifiers))
+          Expression ((WHERE + Change column names to column identifiers))
             ReadFromMergeTree (bluesky_10m_lz4.bluesky)
             Indexes:
               PrimaryKey
-                Keys: 
+                Keys:
                   data.kind
                   data.commit.operation
                 Condition: and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\']))
                 Parts: 10/10
-                Granules: 1432/1494
+                Granules: 1427/1487
+                Search Algorithm: binary search
+                Ranges: 10
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q3:
 
@@ -38,17 +41,19 @@ Expression (Project names)
     Expression ((Before ORDER BY + Projection))
       Aggregating
         Expression (Before GROUP BY)
-          Filter ((WHERE + Change column names to column identifiers))
+          Expression ((WHERE + Change column names to column identifiers))
             ReadFromMergeTree (bluesky_10m_lz4.bluesky)
             Indexes:
               PrimaryKey
-                Keys: 
+                Keys:
                   data.kind
                   data.commit.operation
                   data.commit.collection
                 Condition: and((data.commit.collection in 3-element set), and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\'])))
                 Parts: 10/10
-                Granules: 919/1494
+                Granules: 915/1487
+                Search Algorithm: generic exclusion search
+                Ranges: 10
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q4:
 
@@ -58,17 +63,19 @@ Expression (Project names)
       Expression ((Before ORDER BY + Projection))
         Aggregating
           Expression (Before GROUP BY)
-            Filter ((WHERE + Change column names to column identifiers))
+            Expression ((WHERE + Change column names to column identifiers))
               ReadFromMergeTree (bluesky_10m_lz4.bluesky)
               Indexes:
                 PrimaryKey
-                  Keys: 
+                  Keys:
                     data.kind
                     data.commit.operation
                     data.commit.collection
                   Condition: and((data.commit.collection in [\'app.bsky.feed.post\', \'app.bsky.feed.post\']), and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\'])))
                   Parts: 10/10
-                  Granules: 145/1494
+                  Granules: 141/1487
+                  Search Algorithm: binary search
+                  Ranges: 10
 ------------------------------------------------------------------------------------------------------------------------
 Index usage for query Q5:
 
@@ -78,14 +85,16 @@ Expression (Project names)
       Expression ((Before ORDER BY + Projection))
         Aggregating
           Expression (Before GROUP BY)
-            Filter ((WHERE + Change column names to column identifiers))
+            Expression ((WHERE + Change column names to column identifiers))
               ReadFromMergeTree (bluesky_10m_lz4.bluesky)
               Indexes:
                 PrimaryKey
-                  Keys: 
+                  Keys:
                     data.kind
                     data.commit.operation
                     data.commit.collection
                   Condition: and((data.commit.collection in [\'app.bsky.feed.post\', \'app.bsky.feed.post\']), and((data.commit.operation in [\'create\', \'create\']), (data.kind in [\'commit\', \'commit\'])))
                   Parts: 10/10
-                  Granules: 145/1494
+                  Granules: 141/1487
+                  Search Algorithm: binary search
+                  Ranges: 10
