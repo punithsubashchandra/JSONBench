@@ -156,3 +156,108 @@ db.bluesky.aggregate([
         $limit: 3
     }
 ]);
+
+// ------------------------------------------------------------------------------------------------------------------------
+// -- Q6 - Aggregate stats by user with nested fields and type categorization
+// ------------------------------------------------------------------------------------------------------------------------
+
+db.bluesky.aggregate([
+    {
+      $group: {
+        _id: "$did",
+        activity_type: { $max: "$kind" },
+        total_posts: {
+          $sum: {
+            $cond: [{ $eq: ["$commit.collection", "app.bsky.feed.post"] }, 1, 0]
+          }
+        },
+        total_likes: {
+          $sum: {
+            $cond: [{ $eq: ["$commit.collection", "app.bsky.feed.like"] }, 1, 0]
+          }
+        },
+        total_reposts: {
+          $sum: {
+            $cond: [{ $eq: ["$commit.collection", "app.bsky.feed.repost"] }, 1, 0]
+          }
+        },
+        total_follows: {
+          $sum: {
+            $cond: [{ $eq: ["$commit.collection", "app.bsky.graph.follow"] }, 1, 0]
+          }
+        },
+        last_activity_time: {
+          $max: {
+            $toDate: {
+              $divide: ["$time_us", 1000] // Convert microseconds to milliseconds
+            }
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        user_id: "$_id",
+        activity_type: 1,
+        total_posts: 1,
+        total_likes: 1,
+        total_reposts: 1,
+        total_follows: 1,
+        last_activity_time: 1,
+        _id: 0
+      }
+    }
+  ])
+
+//   ------------------------------------------------------------------------------------------------------------------------
+// -- Q7 - Activity categorization with time-based grouping
+// ------------------------------------------------------------------------------------------------------------------------
+
+db.bluesky.aggregate([
+    {
+      $addFields: {
+        activity_month: {
+          $dateToString: {
+            format: "%Y%m",
+            date: { $toDate: { $divide: ["$time_us", 1000] } }
+          }
+        }
+      }
+    },
+    {
+      $group: {
+        _id: {
+          did: "$did",
+          activity_month: "$activity_month"
+        },
+        content_creation_actions: {
+          $sum: {
+            $cond: [
+              { $in: ["$commit.collection", ["app.bsky.feed.post", "app.bsky.feed.repost"]] },
+              1,
+              0
+            ]
+          }
+        },
+        engagement_actions: {
+          $sum: {
+            $cond: [
+              { $in: ["$commit.collection", ["app.bsky.feed.like", "app.bsky.graph.follow"]] },
+              1,
+              0
+            ]
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        user_id: "$_id.did",
+        activity_month: "$_id.activity_month",
+        content_creation_actions: 1,
+        engagement_actions: 1,
+        _id: 0
+      }
+    }
+  ])
+  
